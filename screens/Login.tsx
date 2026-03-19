@@ -42,10 +42,11 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
 
   const validate = (): Errors => {
     const e: Errors = {};
-    if (!form.email) e.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email";
-    if (!form.password) e.password = "Password is required";
-    else if (form.password.length < 6) e.password = "Minimum 6 characters";
+    if (!form.email) e.email = "Email requis";
+    else if (!/\S+@\S+\.\S+/.test(form.email))
+      e.email = "Entrez un email valide";
+    if (!form.password) e.password = "Mot de passe requis";
+    else if (form.password.length < 6) e.password = "Minimum 6 caractères";
     return e;
   };
 
@@ -79,14 +80,14 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
             <View style={s.logoBox}>
               <Text style={{ fontSize: 28 }}>💪</Text>
             </View>
-            <Text style={s.logoName}>GymPro</Text>
-            <Text style={s.logoSub}>Management System</Text>
+            <Text style={s.logoName}>GOLD'S GYM</Text>
+            <Text style={s.logoSub}>Système de gestion</Text>
           </View>
 
           {/* Card */}
           <View style={s.card}>
-            <Text style={s.title}>Welcome back</Text>
-            <Text style={s.subtitle}>Sign in to your account</Text>
+            <Text style={s.title}>Bon retour</Text>
+            <Text style={s.subtitle}>Connectez-vous à votre compte</Text>
 
             {success ? (
               <View style={s.successBox}>
@@ -99,8 +100,10 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
                 >
                   ✅
                 </Text>
-                <Text style={s.successTitle}>Login successful!</Text>
-                <Text style={s.successSub}>Redirecting to dashboard...</Text>
+                <Text style={s.successTitle}>Connexion réussie !</Text>
+                <Text style={s.successSub}>
+                  Redirection vers le tableau de bord...
+                </Text>
               </View>
             ) : (
               <>
@@ -108,8 +111,8 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
                 <View style={s.roleRow}>
                   {(
                     [
-                      ["admin", "👑 Admin"],
-                      ["secretary", "🗂️ Secretary"],
+                      ["admin", "👑 Administrateur"],
+                      ["secretary", "🗂️ Secrétaire"],
                     ] as [Role, string][]
                   ).map(([r, lbl]) => (
                     <Pressable
@@ -130,8 +133,8 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
                 </View>
 
                 <AuthInput
-                  label="Email Address"
-                  placeholder="admin@gympro.dz"
+                  label="Adresse email"
+                  placeholder="admin@GOLD'S GYM.dz"
                   icon="✉️"
                   keyboardType="email-address"
                   value={form.email}
@@ -140,8 +143,8 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
                 />
 
                 <AuthInput
-                  label="Password"
-                  placeholder="Enter your password"
+                  label="Mot de passe"
+                  placeholder="Entrez votre mot de passe"
                   icon="🔒"
                   isPassword
                   value={form.password}
@@ -150,11 +153,11 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
                 />
 
                 <Pressable style={s.forgotRow}>
-                  <Text style={s.forgotText}>Forgot password?</Text>
+                  <Text style={s.forgotText}>Mot de passe oublié ?</Text>
                 </Pressable>
 
                 <AuthBtn onPress={handleSubmit} loading={loading}>
-                  Sign In →
+                  Se connecter →
                 </AuthBtn>
               </>
             )}
@@ -163,9 +166,9 @@ export default function Login({ onNavigate, onLogin }: LoginProps) {
           {/* Footer link */}
           {!success && (
             <View style={s.footerRow}>
-              <Text style={s.footerText}>Dont have an account? </Text>
+              <Text style={s.footerText}>Vous n'avez pas de compte ? </Text>
               <Pressable onPress={() => onNavigate("register")}>
-                <Text style={s.footerLink}>Create account</Text>
+                <Text style={s.footerLink}>Créer un compte</Text>
               </Pressable>
             </View>
           )}

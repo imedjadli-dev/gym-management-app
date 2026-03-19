@@ -1,3 +1,4 @@
+import SplashScreen from "@/components/SplashScreen";
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { C } from "../constants/colors";
@@ -14,10 +15,33 @@ import Subscriptions from "../screens/Subscriptions";
 type AuthScreen = "login" | "register";
 
 export default function Index() {
+  const [ready, setReady] = useState(false);
+
   const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState<Role>("admin");
   const [active, setActive] = useState<Screen>("tableau_de_bord");
+
+  // ✅ Splash timing
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setReady(true);
+  //   }, 2000);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
+
+  // ✅ ALWAYS FIRST
+  //if (!ready) return <SplashScreen />;
+  if (!ready) return <SplashScreen onFinish={() => setReady(true)} />;
+
+  // ── Auth gate ─────────────────────────────
+  if (!isAuthenticated) {
+    if (authScreen === "login") {
+      return <Login onNavigate={setAuthScreen} onLogin={handleLogin} />;
+    }
+    return <Register onNavigate={setAuthScreen} />;
+  }
 
   const handleLogin = (selectedRole: Role) => {
     setRole(selectedRole);
@@ -27,7 +51,9 @@ export default function Index() {
 
   const handleRoleChange = (r: Role) => {
     setRole(r);
-    if (r === "secretary" && active === "tableau_de_bord") setActive("membres");
+    if (r === "secretary" && active === "tableau_de_bord") {
+      setActive("membres");
+    }
   };
 
   const renderScreen = () => {
@@ -45,15 +71,7 @@ export default function Index() {
     }
   };
 
-  // ── Auth gate ─────────────────────────────────────────────
-  if (!isAuthenticated) {
-    if (authScreen === "login") {
-      return <Login onNavigate={setAuthScreen} onLogin={handleLogin} />;
-    }
-    return <Register onNavigate={setAuthScreen} />;
-  }
-
-  // ── Main app ──────────────────────────────────────────────
+  // ── Main app ─────────────────────────────
   return (
     <SafeAreaView style={s.root}>
       <View style={s.layout}>

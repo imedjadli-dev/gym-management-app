@@ -43,7 +43,7 @@ function passwordStrength(p: string): number {
   return score;
 }
 
-const STRENGTH_LABEL = ["", "Weak", "Fair", "Good", "Strong"];
+const STRENGTH_LABEL = ["", "Faible", "Moyen", "Bon", "Fort"];
 const STRENGTH_COLOR = ["", C.danger, C.warning, "#CA8A04", C.success];
 
 export default function Register({ onNavigate }: RegisterProps) {
@@ -64,21 +64,22 @@ export default function Register({ onNavigate }: RegisterProps) {
 
   const validateStep1 = (): Errors => {
     const e: Errors = {};
-    if (!form.name.trim()) e.name = "Full name is required";
+    if (!form.name.trim()) e.name = "Le nom complet est requis";
     else if (form.name.trim().length < 3)
-      e.name = "Must be at least 3 characters";
-    if (!form.email) e.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Enter a valid email";
+      e.name = "Doit contenir au moins 3 caractères";
+    if (!form.email) e.email = "L'email est requis";
+    else if (!/\S+@\S+\.\S+/.test(form.email))
+      e.email = "Entrez un email valide";
     return e;
   };
 
   const validateStep2 = (): Errors => {
     const e: Errors = {};
-    if (!form.password) e.password = "Password is required";
-    else if (form.password.length < 8) e.password = "Minimum 8 characters";
-    if (!form.confirm) e.confirm = "Please confirm your password";
+    if (!form.password) e.password = "Le mot de passe est requis";
+    else if (form.password.length < 8) e.password = "Minimum 8 caractères";
+    if (!form.confirm) e.confirm = "Veuillez confirmer votre mot de passe";
     else if (form.confirm !== form.password)
-      e.confirm = "Passwords do not match";
+      e.confirm = "Les mots de passe ne correspondent pas";
     return e;
   };
 
@@ -123,13 +124,13 @@ export default function Register({ onNavigate }: RegisterProps) {
             <View style={s.logoBox}>
               <Text style={{ fontSize: 28 }}>💪</Text>
             </View>
-            <Text style={s.logoName}>GymPro</Text>
-            <Text style={s.logoSub}>Create your account</Text>
+            <Text style={s.logoName}>GOLD'S GYM</Text>
+            <Text style={s.logoSub}>Créer votre compte</Text>
           </View>
 
           <View style={s.card}>
-            <Text style={s.title}>Get started</Text>
-            <Text style={s.subtitle}>Set up your GymPro access</Text>
+            <Text style={s.title}>Commencer</Text>
+            <Text style={s.subtitle}>Configurez votre accès GOLD'S GYM</Text>
 
             {/* Step indicator */}
             {!success && (
@@ -172,20 +173,22 @@ export default function Register({ onNavigate }: RegisterProps) {
                 >
                   🎉
                 </Text>
-                <Text style={s.successTitle}>Account created!</Text>
-                <Text style={s.successSub}>Your GymPro account is ready.</Text>
+                <Text style={s.successTitle}>Compte créé !</Text>
+                <Text style={s.successSub}>
+                  Votre compte GOLD'S GYM est prêt.
+                </Text>
                 <Pressable
                   style={s.loginBtn}
                   onPress={() => onNavigate("login")}
                 >
-                  <Text style={s.loginBtnText}>Go to Login →</Text>
+                  <Text style={s.loginBtnText}>Aller à la connexion →</Text>
                 </Pressable>
               </View>
             ) : step === 1 ? (
               <>
                 <AuthInput
-                  label="Full Name"
-                  placeholder="e.g. Ahmed Benali"
+                  label="Nom complet"
+                  placeholder="ex: Ahmed Benali"
                   icon="👤"
                   value={form.name}
                   onChangeText={set("name")}
@@ -193,8 +196,8 @@ export default function Register({ onNavigate }: RegisterProps) {
                 />
 
                 <AuthInput
-                  label="Email Address"
-                  placeholder="ahmed@gympro.dz"
+                  label="Adresse email"
+                  placeholder="ahmed@GOLD'S GYM.dz"
                   icon="✉️"
                   keyboardType="email-address"
                   value={form.email}
@@ -204,20 +207,20 @@ export default function Register({ onNavigate }: RegisterProps) {
 
                 {/* Role picker */}
                 <View style={{ marginBottom: 20 }}>
-                  <Text style={s.fieldLabel}>ROLE</Text>
+                  <Text style={s.fieldLabel}>RÔLE</Text>
                   <View style={s.roleGrid}>
                     {[
                       {
                         value: "admin" as Role,
                         icon: "👑",
                         label: "Admin",
-                        desc: "Full access",
+                        desc: "Accès complet",
                       },
                       {
                         value: "secretary" as Role,
                         icon: "🗂️",
-                        label: "Secretary",
-                        desc: "Limited access",
+                        label: "Secrétaire",
+                        desc: "Accès limité",
                       },
                     ].map((r) => (
                       <Pressable
@@ -243,7 +246,7 @@ export default function Register({ onNavigate }: RegisterProps) {
                   </View>
                 </View>
 
-                <AuthBtn onPress={nextStep}>Continue →</AuthBtn>
+                <AuthBtn onPress={nextStep}>Continuer →</AuthBtn>
               </>
             ) : (
               <>
@@ -254,18 +257,18 @@ export default function Register({ onNavigate }: RegisterProps) {
                     setErrors({});
                   }}
                 >
-                  <Text style={s.backBtnText}>← Back</Text>
+                  <Text style={s.backBtnText}>← Retour</Text>
                 </Pressable>
 
                 <AuthInput
-                  label="Password"
-                  placeholder="Min. 8 characters"
+                  label="Mot de passe"
+                  placeholder="Min. 8 caractères"
                   icon="🔒"
                   isPassword
                   value={form.password}
                   onChangeText={set("password")}
                   error={errors.password}
-                  hint="Use uppercase, numbers and symbols"
+                  hint="Utilisez des majuscules, chiffres et symboles"
                 />
 
                 {/* Strength meter */}
@@ -291,14 +294,14 @@ export default function Register({ onNavigate }: RegisterProps) {
                         { color: STRENGTH_COLOR[s_val] },
                       ]}
                     >
-                      {STRENGTH_LABEL[s_val]} password
+                      {STRENGTH_LABEL[s_val]} mot de passe
                     </Text>
                   </View>
                 )}
 
                 <AuthInput
-                  label="Confirm Password"
-                  placeholder="Repeat your password"
+                  label="Confirmer le mot de passe"
+                  placeholder="Répétez votre mot de passe"
                   icon="🔒"
                   isPassword
                   value={form.confirm}
@@ -308,11 +311,11 @@ export default function Register({ onNavigate }: RegisterProps) {
 
                 {/* Summary */}
                 <View style={s.summary}>
-                  <Text style={s.summaryTitle}>ACCOUNT SUMMARY</Text>
+                  <Text style={s.summaryTitle}>RÉSUMÉ DU COMPTE</Text>
                   {[
-                    { label: "Name", value: form.name || "—" },
+                    { label: "Nom", value: form.name || "—" },
                     { label: "Email", value: form.email || "—" },
-                    { label: "Role", value: form.role, accent: true },
+                    { label: "Rôle", value: form.role, accent: true },
                   ].map((row) => (
                     <View key={row.label} style={s.summaryRow}>
                       <Text style={s.summaryKey}>{row.label}</Text>
@@ -329,7 +332,7 @@ export default function Register({ onNavigate }: RegisterProps) {
                 </View>
 
                 <AuthBtn onPress={handleSubmit} loading={loading}>
-                  Create Account
+                  Créer un compte
                 </AuthBtn>
               </>
             )}
@@ -337,9 +340,9 @@ export default function Register({ onNavigate }: RegisterProps) {
 
           {!success && (
             <View style={s.footerRow}>
-              <Text style={s.footerText}>Already have an account? </Text>
+              <Text style={s.footerText}>Vous avez déjà un compte ? </Text>
               <Pressable onPress={() => onNavigate("login")}>
-                <Text style={s.footerLink}>Sign in</Text>
+                <Text style={s.footerLink}>Se connecter</Text>
               </Pressable>
             </View>
           )}

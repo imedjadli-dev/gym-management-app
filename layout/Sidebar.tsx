@@ -28,7 +28,7 @@ export default function Sidebar({ role, active, setActive }: SidebarProps) {
           <Text style={{ fontSize: 20 }}>💪</Text>
         </View>
         <View>
-          <Text style={s.logoName}>GymPro</Text>
+          <Text style={s.logoName}>GOLD'S GYM</Text>
           <Text style={s.logoSub}>Management</Text>
         </View>
       </View>
