@@ -10,7 +10,7 @@ interface RoleSwitcherProps {
 
 const ROLES: { value: Role; label: string }[] = [
   { value: "admin", label: "👑 Admin" },
-  { value: "secretary", label: "🗂️ Secretary" },
+  { value: "secretary", label: "🗂️ Secretaire" },
 ];
 
 export default function RoleSwitcher({ role, setRole }: RoleSwitcherProps) {

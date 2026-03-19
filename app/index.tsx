@@ -17,28 +17,28 @@ export default function Index() {
   const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState<Role>("admin");
-  const [active, setActive] = useState<Screen>("dashboard");
+  const [active, setActive] = useState<Screen>("tableau_de_bord");
 
   const handleLogin = (selectedRole: Role) => {
     setRole(selectedRole);
     setIsAuthenticated(true);
-    setActive(selectedRole === "admin" ? "dashboard" : "members");
+    setActive(selectedRole === "admin" ? "tableau_de_bord" : "membres");
   };
 
   const handleRoleChange = (r: Role) => {
     setRole(r);
-    if (r === "secretary" && active === "dashboard") setActive("members");
+    if (r === "secretary" && active === "tableau_de_bord") setActive("membres");
   };
 
   const renderScreen = () => {
     switch (active) {
-      case "dashboard":
+      case "tableau_de_bord":
         return <Dashboard role={role} />;
-      case "members":
+      case "membres":
         return <Members role={role} />;
-      case "subscriptions":
+      case "abonnements":
         return <Subscriptions role={role} />;
-      case "products":
+      case "produits":
         return <Products role={role} />;
       default:
         return <Dashboard role={role} />;

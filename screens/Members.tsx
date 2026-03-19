@@ -24,14 +24,14 @@ interface MembersProps {
 type Filter = "all" | MemberStatus;
 
 const FILTERS: { value: Filter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "active", label: "Active" },
-  { value: "new", label: "New" },
-  { value: "expired", label: "Expired" },
+  { value: "all", label: "Tous" },
+  { value: "active", label: "Actifs" },
+  { value: "new", label: "Nouveaux" },
+  { value: "expired", label: "Expirés" },
 ];
 
 const PLAN_OPTIONS = [
-  { value: "Basic", label: "Basic" },
+  { value: "Basic", label: "Basique" },
   { value: "Premium", label: "Premium" },
 ];
 
@@ -68,8 +68,8 @@ export default function Members({ role }: MembersProps) {
 
   const validateForm = () => {
     const e: { name?: string; phone?: string } = {};
-    if (!form.name.trim()) e.name = "Name is required";
-    if (!form.phone.trim()) e.phone = "Phone is required";
+    if (!form.name.trim()) e.name = "Le nom est requis";
+    if (!form.phone.trim()) e.phone = "Le téléphone est requis";
     return e;
   };
 
@@ -120,11 +120,11 @@ export default function Members({ role }: MembersProps) {
       {/* Actions */}
       <View style={s.actionsCell}>
         <Btn small variant="secondary" onPress={() => openEdit(item)}>
-          Edit
+          Modifier
         </Btn>
         {role === "admin" && (
           <Btn small variant="danger" style={{ marginLeft: 6 }}>
-            Del
+            Suppr
           </Btn>
         )}
       </View>
@@ -136,10 +136,10 @@ export default function Members({ role }: MembersProps) {
       {/* Header */}
       <View style={s.pageHeader}>
         <View>
-          <Text style={s.pageTitle}>Members</Text>
-          <Text style={s.pageSub}>{MEMBERS.length} total members</Text>
+          <Text style={s.pageTitle}>Membres</Text>
+          <Text style={s.pageSub}>{MEMBERS.length} membres au total</Text>
         </View>
-        <Btn onPress={openAdd}>＋ Add Member</Btn>
+        <Btn onPress={openAdd}>＋ Ajouter un membre</Btn>
       </View>
 
       {/* Search */}
@@ -148,7 +148,7 @@ export default function Members({ role }: MembersProps) {
           <Text style={s.searchIcon}>🔍</Text>
           <TextInput
             style={s.searchInput}
-            placeholder="Search members..."
+            placeholder="Rechercher des membres..."
             placeholderTextColor={C.textMuted}
             value={search}
             onChangeText={setSearch}
@@ -177,10 +177,10 @@ export default function Members({ role }: MembersProps) {
       <Card style={s.tableCard}>
         {/* Table header */}
         <View style={[s.row, s.tableHead]}>
-          <Text style={[s.headCell, { flex: 2.2 }]}>Member</Text>
+          <Text style={[s.headCell, { flex: 2.2 }]}>Membre</Text>
           <Text style={[s.headCell, { flex: 1 }]}>Plan</Text>
-          <Text style={[s.headCell, { flex: 1 }]}>Status</Text>
-          <Text style={[s.headCell, { flex: 1.3 }]}>Expires</Text>
+          <Text style={[s.headCell, { flex: 1 }]}>Statut</Text>
+          <Text style={[s.headCell, { flex: 1.3 }]}>Expire</Text>
           <Text style={[s.headCell, { flex: 1.4 }]}>Actions</Text>
         </View>
 
@@ -191,7 +191,7 @@ export default function Members({ role }: MembersProps) {
           scrollEnabled={false}
           ListEmptyComponent={
             <View style={s.emptyBox}>
-              <Text style={s.emptyText}>No members found</Text>
+              <Text style={s.emptyText}>Aucun membre trouvé</Text>
             </View>
           }
         />
@@ -199,21 +199,21 @@ export default function Members({ role }: MembersProps) {
 
       {/* Add / Edit Modal */}
       <Modal
-        title={editMember ? "Edit Member" : "Add New Member"}
+        title={editMember ? "Modifier le membre" : "Ajouter un membre"}
         visible={showModal}
         onClose={() => setShowModal(false)}
       >
-        <FormField label="Full Name" error={formErrors.name}>
+        <FormField label="Nom complet" error={formErrors.name}>
           <TextInput
             style={s.modalInput}
-            placeholder="Full name"
+            placeholder="Nom complet"
             placeholderTextColor={C.textMuted}
             value={form.name}
             onChangeText={(v) => setForm({ ...form, name: v })}
           />
         </FormField>
 
-        <FormField label="Phone" error={formErrors.phone}>
+        <FormField label="Téléphone" error={formErrors.phone}>
           <TextInput
             style={s.modalInput}
             placeholder="+213 ..."
@@ -229,7 +229,7 @@ export default function Members({ role }: MembersProps) {
             value={form.plan}
             onChange={(v) => setForm({ ...form, plan: v })}
             options={PLAN_OPTIONS}
-            placeholder="Select plan"
+            placeholder="Sélectionner un plan"
           />
         </FormField>
 
@@ -239,11 +239,11 @@ export default function Members({ role }: MembersProps) {
             onPress={() => setShowModal(false)}
             style={{ flex: 1 }}
           >
-            Cancel
+            Annuler
           </Btn>
           <View style={{ width: 10 }} />
           <Btn onPress={handleSave} style={{ flex: 1 }}>
-            {editMember ? "Save Changes" : "Add Member"}
+            {editMember ? "Enregistrer les modifications" : "Ajouter le membre"}
           </Btn>
         </View>
       </Modal>

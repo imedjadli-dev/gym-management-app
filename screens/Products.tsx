@@ -29,12 +29,12 @@ const CATEGORY_ICONS: Record<string, string> = {
 
 const CATEGORY_OPTIONS = [
   { value: "Nutrition", label: "Nutrition" },
-  { value: "Equipment", label: "Equipment" },
-  { value: "Accessories", label: "Accessories" },
+  { value: "Equipment", label: "Équipement" },
+  { value: "Accessories", label: "Accessoires" },
 ];
 
 const MEMBER_OPTIONS = [
-  { value: "", label: "Walk-in customer" },
+  { value: "", label: "Client de passage" },
   ...MEMBERS.map((m) => ({ value: m.name, label: m.name })),
 ];
 
@@ -112,16 +112,17 @@ export default function Products({ role }: ProductsProps) {
         {/* Stats grid */}
         <View style={s.statsGrid}>
           {[
-            { label: "Price", value: `${item.price.toLocaleString()} DA` },
+            { label: "Prix", value: `${item.price.toLocaleString()} TND` },
             {
               label: "Stock",
-              value: item.stock === 0 ? "Out of stock" : `${item.stock} units`,
+              value:
+                item.stock === 0 ? "Rupture de stock" : `${item.stock} unités`,
               danger: item.stock === 0,
             },
-            { label: "Units Sold", value: String(item.sold) },
+            { label: "Unités vendues", value: String(item.sold) },
             {
-              label: "Revenue",
-              value: `${((item.price * item.sold) / 1000).toFixed(1)}K DA`,
+              label: "Revenu",
+              value: `${((item.price * item.sold) / 1000).toFixed(1)}K TND`,
             },
           ].map((stat) => (
             <View key={stat.label} style={s.statBox}>
@@ -143,7 +144,7 @@ export default function Products({ role }: ProductsProps) {
               ]}
             />
           </View>
-          <Text style={s.stockLabel}>Stock level</Text>
+          <Text style={s.stockLabel}>Niveau de stock</Text>
         </View>
 
         {/* Actions */}
@@ -154,7 +155,7 @@ export default function Products({ role }: ProductsProps) {
             style={{ flex: 1 }}
             onPress={() => openSell(item)}
           >
-            💳 Sell
+            💳 Vendre
           </Btn>
           {role === "admin" && (
             <>
@@ -164,10 +165,10 @@ export default function Products({ role }: ProductsProps) {
                 style={{ marginLeft: 8 }}
                 onPress={() => openEdit(item)}
               >
-                Edit
+                Modifier
               </Btn>
               <Btn small variant="danger" style={{ marginLeft: 6 }}>
-                Del
+                Suppr
               </Btn>
             </>
           )}
@@ -185,40 +186,40 @@ export default function Products({ role }: ProductsProps) {
       {/* Header */}
       <View style={s.pageHeader}>
         <View>
-          <Text style={s.pageTitle}>Products & Sales</Text>
-          <Text style={s.pageSub}>{PRODUCTS.length} products</Text>
+          <Text style={s.pageTitle}>Produits & Ventes</Text>
+          <Text style={s.pageSub}>{PRODUCTS.length} produits</Text>
         </View>
-        {role === "admin" && <Btn onPress={openAdd}>＋ Add Product</Btn>}
+        {role === "admin" && <Btn onPress={openAdd}>＋ Ajouter un produit</Btn>}
       </View>
 
       {/* Stat cards */}
       <View style={s.statsRow}>
         <StatCard
           icon="📦"
-          label="Products"
+          label="Produits"
           value={String(PRODUCTS.length)}
           color={C.accent}
         />
         <View style={{ width: 10 }} />
         <StatCard
           icon="💵"
-          label="Revenue"
-          value={`${(totalRevenue / 1000).toFixed(0)}K DA`}
+          label="Revenu"
+          value={`${(totalRevenue / 1000).toFixed(0)}K TND`}
           color={C.success}
         />
       </View>
       <View style={[s.statsRow, { marginTop: 10, marginBottom: 16 }]}>
         <StatCard
           icon="🏆"
-          label="Best Seller"
+          label="Meilleure vente"
           value={bestSeller.name}
-          sub={`${bestSeller.sold} sold`}
+          sub={`${bestSeller.sold} vendus`}
           color={C.gold}
         />
         <View style={{ width: 10 }} />
         <StatCard
           icon="🚫"
-          label="Out of Stock"
+          label="Rupture de stock"
           value={String(outOfStock)}
           color={C.danger}
         />
@@ -229,7 +230,7 @@ export default function Products({ role }: ProductsProps) {
         <Text style={{ fontSize: 14 }}>🔍</Text>
         <TextInput
           style={s.searchInput}
-          placeholder="Search products..."
+          placeholder="Rechercher des produits..."
           placeholderTextColor={C.textMuted}
           value={search}
           onChangeText={setSearch}
@@ -247,36 +248,36 @@ export default function Products({ role }: ProductsProps) {
         scrollEnabled={false}
         ListEmptyComponent={
           <View style={s.emptyBox}>
-            <Text style={s.emptyText}>No products found</Text>
+            <Text style={s.emptyText}>Aucun produit trouvé</Text>
           </View>
         }
       />
 
       {/* Add / Edit Modal */}
       <Modal
-        title={editProduct ? "Edit Product" : "Add Product"}
+        title={editProduct ? "Modifier le produit" : "Ajouter un produit"}
         visible={showModal}
         onClose={() => setShowModal(false)}
       >
-        <FormField label="Product Name">
+        <FormField label="Nom du produit">
           <TextInput
             style={s.modalInput}
-            placeholder="e.g. Whey Protein 1kg"
+            placeholder="ex : Whey Protein 1kg"
             placeholderTextColor={C.textMuted}
             value={form.name}
             onChangeText={(v) => setForm({ ...form, name: v })}
           />
         </FormField>
-        <FormField label="Category">
+        <FormField label="Catégorie">
           <Select
             value={form.category}
             onChange={(v) => setForm({ ...form, category: v })}
             options={CATEGORY_OPTIONS}
-            placeholder="Select category"
+            placeholder="Sélectionner une catégorie"
           />
         </FormField>
         <View style={s.twoCol}>
-          <FormField label="Price (DA)" style={{ flex: 1 }}>
+          <FormField label="Prix (TND)" style={{ flex: 1 }}>
             <TextInput
               style={s.modalInput}
               placeholder="4500"
@@ -304,11 +305,11 @@ export default function Products({ role }: ProductsProps) {
             onPress={() => setShowModal(false)}
             style={{ flex: 1 }}
           >
-            Cancel
+            Annuler
           </Btn>
           <View style={{ width: 10 }} />
           <Btn onPress={() => setShowModal(false)} style={{ flex: 1 }}>
-            {editProduct ? "Save" : "Add Product"}
+            {editProduct ? "Enregistrer" : "Ajouter le produit"}
           </Btn>
         </View>
       </Modal>
@@ -316,41 +317,41 @@ export default function Products({ role }: ProductsProps) {
       {/* Sell Modal */}
       {showSell && (
         <Modal
-          title={`Sell — ${showSell.name}`}
+          title={`Vente — ${showSell.name}`}
           visible={!!showSell}
           onClose={() => setShowSell(null)}
         >
           {/* Product info */}
           <View style={s.sellInfo}>
             <View style={s.sellInfoRow}>
-              <Text style={s.sellInfoKey}>Unit price</Text>
+              <Text style={s.sellInfoKey}>Prix unitaire</Text>
               <Text style={s.sellInfoVal}>
-                {showSell.price.toLocaleString()} DA
+                {showSell.price.toLocaleString()} TND
               </Text>
             </View>
             <View style={s.sellInfoRow}>
-              <Text style={s.sellInfoKey}>Available stock</Text>
+              <Text style={s.sellInfoKey}>Stock disponible</Text>
               <Text
                 style={[
                   s.sellInfoVal,
                   { color: showSell.stock === 0 ? C.danger : C.success },
                 ]}
               >
-                {showSell.stock} units
+                {showSell.stock} unités
               </Text>
             </View>
           </View>
 
-          <FormField label="Customer / Member">
+          <FormField label="Client / Membre">
             <Select
               value={sellMember}
               onChange={setSellMember}
               options={MEMBER_OPTIONS}
-              placeholder="Walk-in customer"
+              placeholder="Client de passage"
             />
           </FormField>
 
-          <FormField label="Quantity">
+          <FormField label="Quantité">
             <TextInput
               style={s.modalInput}
               value={qty}
@@ -363,7 +364,7 @@ export default function Products({ role }: ProductsProps) {
           {/* Total */}
           <View style={s.totalBox}>
             <Text style={s.totalLabel}>Total</Text>
-            <Text style={s.totalValue}>{total.toLocaleString()} DA</Text>
+            <Text style={s.totalValue}>{total.toLocaleString()} TND</Text>
           </View>
 
           <View style={s.modalActions}>
@@ -372,7 +373,7 @@ export default function Products({ role }: ProductsProps) {
               onPress={() => setShowSell(null)}
               style={{ flex: 1 }}
             >
-              Cancel
+              Annuler
             </Btn>
             <View style={{ width: 10 }} />
             <Btn
@@ -380,7 +381,7 @@ export default function Products({ role }: ProductsProps) {
               onPress={() => setShowSell(null)}
               style={{ flex: 1 }}
             >
-              ✓ Confirm Sale
+              ✓ Confirmer la vente
             </Btn>
           </View>
         </Modal>

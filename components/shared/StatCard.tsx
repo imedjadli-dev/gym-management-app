@@ -31,7 +31,7 @@ export default function StatCard({
             <Text
               style={[s.trend, { color: trend > 0 ? C.success : C.danger }]}
             >
-              {trend > 0 ? "↑" : "↓"} {Math.abs(trend)}% vs last month
+              {trend > 0 ? "↑" : "↓"} {Math.abs(trend)}% vs le mois dernier
             </Text>
           )}
         </View>

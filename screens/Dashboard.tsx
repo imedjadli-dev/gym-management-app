@@ -14,52 +14,52 @@ interface DashboardProps {
 const REVENUE_DATA = [
   { label: "Oct", value: 320000 },
   { label: "Nov", value: 410000 },
-  { label: "Dec", value: 390000 },
+  { label: "Déc", value: 390000 },
   { label: "Jan", value: 520000 },
-  { label: "Feb", value: 480000 },
+  { label: "Fév", value: 480000 },
   { label: "Mar", value: 610000 },
 ];
 
 const MEMBER_DATA = [
   { label: "Oct", value: 48 },
   { label: "Nov", value: 55 },
-  { label: "Dec", value: 60 },
+  { label: "Déc", value: 60 },
   { label: "Jan", value: 72 },
-  { label: "Feb", value: 68 },
+  { label: "Fév", value: 68 },
   { label: "Mar", value: 81 },
 ];
 
 const ACTIVITY = [
   {
     icon: "🆕",
-    text: "Nour Benali — New Basic subscription",
-    time: "2h ago",
+    text: "Nour Benali — Nouvel abonnement Basic",
+    time: "Il y a 2h",
     color: C.accentLight,
   },
   {
     icon: "🔄",
-    text: "Amina Khelifi — Renewed Basic plan",
-    time: "5h ago",
+    text: "Amina Khelifi — Renouvellement du plan Basic",
+    time: "Il y a 5h",
     color: C.warningLight,
   },
   {
     icon: "💊",
-    text: "Whey Protein 1kg — 3 units sold",
-    time: "Yesterday",
+    text: "Whey Protein 1kg — 3 unités vendues",
+    time: "Hier",
     color: C.goldLight,
   },
   {
     icon: "⚠️",
-    text: "Riad Mansouri — Subscription expired",
-    time: "4 days ago",
+    text: "Riad Mansouri — Abonnement expiré",
+    time: "Il y a 4 jours",
     color: C.dangerLight,
   },
 ];
 
 const SUBS_BREAKDOWN = [
-  { label: "Active", count: 69, color: C.success, pct: 85 },
-  { label: "New", count: 13, color: C.accent, pct: 16 },
-  { label: "Expired", count: 6, color: C.danger, pct: 7 },
+  { label: "Actifs", count: 69, color: C.success, pct: 85 },
+  { label: "Nouveaux", count: 13, color: C.accent, pct: 16 },
+  { label: "Expirés", count: 6, color: C.danger, pct: 7 },
 ];
 
 export default function Dashboard({ role }: DashboardProps) {
@@ -71,8 +71,8 @@ export default function Dashboard({ role }: DashboardProps) {
     >
       {/* Page title */}
       <View style={s.pageHeader}>
-        <Text style={s.pageTitle}>Dashboard</Text>
-        <Text style={s.pageDate}>Thursday, 19 March 2026</Text>
+        <Text style={s.pageTitle}>Tableau de bord</Text>
+        <Text style={s.pageDate}>Jeudi 19 mars 2026</Text>
       </View>
 
       {/* Stat cards — 2x2 grid */}
@@ -80,18 +80,18 @@ export default function Dashboard({ role }: DashboardProps) {
         <View style={s.statsRow}>
           <StatCard
             icon="👥"
-            label="Total Members"
+            label="Membres totaux"
             value="81"
-            sub="Active members"
+            sub="Membres actifs"
             trend={12}
             color={C.accent}
           />
           <View style={s.statGap} />
           <StatCard
             icon="💰"
-            label="Monthly Revenue"
-            value="610K DA"
-            sub="March 2026"
+            label="Revenu mensuel"
+            value="610K TND"
+            sub="Mars 2026"
             trend={27}
             color={C.success}
           />
@@ -99,18 +99,18 @@ export default function Dashboard({ role }: DashboardProps) {
         <View style={s.statsRow}>
           <StatCard
             icon="🆕"
-            label="New This Month"
+            label="Nouveaux ce mois"
             value="13"
-            sub="New subscriptions"
+            sub="Nouveaux abonnements"
             trend={8}
             color="#7C3AED"
           />
           <View style={s.statGap} />
           <StatCard
             icon="⚠️"
-            label="Expired"
+            label="Expirés"
             value="6"
-            sub="Need renewal"
+            sub="À renouveler"
             color={C.danger}
           />
         </View>
@@ -121,8 +121,8 @@ export default function Dashboard({ role }: DashboardProps) {
         <Card style={[s.chartCard, { flex: 2 }]}>
           <View style={s.chartHeader}>
             <View>
-              <Text style={s.chartTitle}>Revenue Trend</Text>
-              <Text style={s.chartSub}>Last 6 months</Text>
+              <Text style={s.chartTitle}>Tendance des revenus</Text>
+              <Text style={s.chartSub}>6 derniers mois</Text>
             </View>
             <Text style={s.chartValue}>DA 3.73M</Text>
           </View>
@@ -130,8 +130,8 @@ export default function Dashboard({ role }: DashboardProps) {
         </Card>
         <View style={{ width: 12 }} />
         <Card style={[s.chartCard, { flex: 1 }]}>
-          <Text style={s.chartTitle}>Member Growth</Text>
-          <Text style={s.chartSub}>Last 6 months</Text>
+          <Text style={s.chartTitle}>Croissance des membres</Text>
+          <Text style={s.chartSub}>6 derniers mois</Text>
           <View style={{ marginTop: 10 }}>
             <MiniBarChart data={MEMBER_DATA} color="#7C3AED" />
           </View>
@@ -159,14 +159,14 @@ export default function Dashboard({ role }: DashboardProps) {
                 ]}
               />
             </View>
-            <Text style={s.breakdownPct}>{s_item.pct}% of total</Text>
+            <Text style={s.breakdownPct}>{s_item.pct}% du total</Text>
           </Card>
         ))}
       </View>
 
       {/* Recent activity */}
       <Card style={s.activityCard}>
-        <SectionHeader title="Recent Activity" />
+        <SectionHeader title="Activité récente" />
         {ACTIVITY.map((a, i) => (
           <View
             key={i}

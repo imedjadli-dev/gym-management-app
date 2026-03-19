@@ -30,28 +30,28 @@ interface SubscriptionsProps {
 type Filter = "all" | SubscriptionType;
 
 const FILTERS: { value: Filter; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "new", label: "New" },
-  { value: "active", label: "Active" },
-  { value: "renew", label: "Renewed" },
-  { value: "expired", label: "Expired" },
+  { value: "all", label: "Tous" },
+  { value: "new", label: "Nouveaux" },
+  { value: "active", label: "Actifs" },
+  { value: "renew", label: "Renouvelés" },
+  { value: "expired", label: "Expirés" },
 ];
 
 const SUMMARY_CARDS = [
-  { type: "new", icon: "🆕", label: "New", color: C.accent },
-  { type: "active", icon: "✅", label: "Active", color: C.success },
-  { type: "renew", icon: "🔄", label: "Renewed", color: C.warning },
-  { type: "expired", icon: "⚠️", label: "Expired", color: C.danger },
+  { type: "new", icon: "🆕", label: "Nouveaux", color: C.accent },
+  { type: "active", icon: "✅", label: "Actifs", color: C.success },
+  { type: "renew", icon: "🔄", label: "Renouvelés", color: C.warning },
+  { type: "expired", icon: "⚠️", label: "Expirés", color: C.danger },
 ] as const;
 
 const MEMBER_OPTIONS = MEMBERS.map((m) => ({ value: m.name, label: m.name }));
 const PLAN_OPTIONS = [
-  { value: "Basic", label: "Basic — 2,000 DA/mo" },
-  { value: "Premium", label: "Premium — 3,500 DA/mo" },
+  { value: "Basic", label: "Basique — 2,000 TND/mois" },
+  { value: "Premium", label: "Premium — 3,500 TND/mois" },
 ];
 const TYPE_OPTIONS = [
-  { value: "new", label: "New" },
-  { value: "renew", label: "Renewal" },
+  { value: "new", label: "Nouveau" },
+  { value: "renew", label: "Renouvellement" },
 ];
 
 export default function Subscriptions({ role }: SubscriptionsProps) {
@@ -101,12 +101,12 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
         <View style={s.actionsCell}>
           {item.type === "expired" && (
             <Btn small variant="success">
-              Renew
+              Renouveler
             </Btn>
           )}
           {role === "admin" && (
             <Btn small variant="danger" style={{ marginLeft: 4 }}>
-              Del
+              Suppr
             </Btn>
           )}
         </View>
@@ -123,10 +123,10 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
       {/* Header */}
       <View style={s.pageHeader}>
         <View>
-          <Text style={s.pageTitle}>Subscriptions</Text>
-          <Text style={s.pageSub}>Manage all membership plans</Text>
+          <Text style={s.pageTitle}>Abonnements</Text>
+          <Text style={s.pageSub}>Gérer tous les plans d'adhésion</Text>
         </View>
-        <Btn onPress={() => setShowModal(true)}>＋ New</Btn>
+        <Btn onPress={() => setShowModal(true)}>＋ Nouveau</Btn>
       </View>
 
       {/* Summary cards */}
@@ -191,11 +191,11 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
       <Card style={s.tableCard}>
         {/* Table head */}
         <View style={[s.row, s.tableHead]}>
-          <Text style={[s.headCell, { flex: 2 }]}>Member</Text>
+          <Text style={[s.headCell, { flex: 2 }]}>Membre</Text>
           <Text style={[s.headCell, { flex: 1 }]}>Plan</Text>
-          <Text style={[s.headCell, { flex: 1 }]}>Status</Text>
+          <Text style={[s.headCell, { flex: 1 }]}>Statut</Text>
           <Text style={[s.headCell, { flex: 1.2 }]}>Date</Text>
-          <Text style={[s.headCell, { flex: 1.2 }]}>Amount</Text>
+          <Text style={[s.headCell, { flex: 1.2 }]}>Montant</Text>
           <Text style={[s.headCell, { flex: 1.4 }]}>Actions</Text>
         </View>
         <FlatList
@@ -205,7 +205,7 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
           scrollEnabled={false}
           ListEmptyComponent={
             <View style={s.emptyBox}>
-              <Text style={s.emptyText}>No subscriptions found</Text>
+              <Text style={s.emptyText}>Aucun abonnement trouvé</Text>
             </View>
           }
         />
@@ -213,16 +213,16 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
 
       {/* New Subscription Modal */}
       <Modal
-        title="New Subscription"
+        title="Nouvel abonnement"
         visible={showModal}
         onClose={() => setShowModal(false)}
       >
-        <FormField label="Member">
+        <FormField label="Membre">
           <Select
             value={form.member}
             onChange={(v) => setForm({ ...form, member: v })}
             options={MEMBER_OPTIONS}
-            placeholder="Select member..."
+            placeholder="Sélectionner un membre..."
           />
         </FormField>
         <FormField label="Plan">
@@ -230,7 +230,7 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
             value={form.plan}
             onChange={(v) => setForm({ ...form, plan: v })}
             options={PLAN_OPTIONS}
-            placeholder="Select plan"
+            placeholder="Sélectionner un plan"
           />
         </FormField>
         <FormField label="Type">
@@ -238,7 +238,7 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
             value={form.type}
             onChange={(v) => setForm({ ...form, type: v })}
             options={TYPE_OPTIONS}
-            placeholder="Select type"
+            placeholder="Sélectionner un type"
           />
         </FormField>
         <View style={s.modalActions}>
@@ -247,11 +247,11 @@ export default function Subscriptions({ role }: SubscriptionsProps) {
             onPress={() => setShowModal(false)}
             style={{ flex: 1 }}
           >
-            Cancel
+            Annuler
           </Btn>
           <View style={{ width: 10 }} />
           <Btn onPress={() => setShowModal(false)} style={{ flex: 1 }}>
-            Create
+            Créer
           </Btn>
         </View>
       </Modal>

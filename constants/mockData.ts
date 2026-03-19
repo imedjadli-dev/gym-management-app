@@ -1,9 +1,50 @@
-export const MEMBERS = [
+export type MemberStatus = "actif" | "expiré" | "nouveau";
+export type SubscriptionType = "nouveau" | "renouvelé" | "expiré" | "actif";
+export type ProductCategory = "Nutrition" | "Équipement" | "Accessoires";
+export type Role = "admin" | "secretary";
+export type Screen = "tableau_de_bord" | "membres" | "abonnements" | "produits";
+
+export interface Member {
+  id: number;
+  name: string;
+  plan: string;
+  status: MemberStatus;
+  joined: string;
+  expires: string;
+  phone: string;
+  avatar: string;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  category: ProductCategory;
+  price: number;
+  stock: number;
+  sold: number;
+}
+
+export interface Subscription {
+  id: number;
+  member: string;
+  plan: string;
+  type: SubscriptionType;
+  date: string;
+  amount: number;
+}
+
+export interface NavItem {
+  id: Screen;
+  label: string;
+  icon: string;
+}
+
+export const MEMBERS: Member[] = [
   {
     id: 1,
     name: "Yassine Bouazza",
     plan: "Premium",
-    status: "active",
+    status: "actif",
     joined: "2025-01-10",
     expires: "2026-01-10",
     phone: "+213 555 0101",
@@ -13,7 +54,7 @@ export const MEMBERS = [
     id: 2,
     name: "Amina Khelifi",
     plan: "Basic",
-    status: "active",
+    status: "actif",
     joined: "2025-03-01",
     expires: "2026-03-01",
     phone: "+213 555 0202",
@@ -23,7 +64,7 @@ export const MEMBERS = [
     id: 3,
     name: "Riad Mansouri",
     plan: "Premium",
-    status: "expired",
+    status: "expiré",
     joined: "2024-03-15",
     expires: "2025-03-15",
     phone: "+213 555 0303",
@@ -33,7 +74,7 @@ export const MEMBERS = [
     id: 4,
     name: "Nour Benali",
     plan: "Basic",
-    status: "new",
+    status: "nouveau",
     joined: "2026-03-01",
     expires: "2026-04-01",
     phone: "+213 555 0404",
@@ -43,7 +84,7 @@ export const MEMBERS = [
     id: 5,
     name: "Karim Oukaci",
     plan: "Premium",
-    status: "active",
+    status: "actif",
     joined: "2025-06-20",
     expires: "2026-06-20",
     phone: "+213 555 0505",
@@ -53,7 +94,7 @@ export const MEMBERS = [
     id: 6,
     name: "Sonia Hadjadj",
     plan: "Basic",
-    status: "expired",
+    status: "expiré",
     joined: "2024-09-01",
     expires: "2025-09-01",
     phone: "+213 555 0606",
@@ -61,7 +102,7 @@ export const MEMBERS = [
   },
 ];
 
-export const PRODUCTS = [
+export const PRODUCTS: Product[] = [
   {
     id: 1,
     name: "Whey Protein 1kg",
@@ -72,7 +113,7 @@ export const PRODUCTS = [
   },
   {
     id: 2,
-    name: "Creatine Monohydrate",
+    name: "Créatine Monohydrate",
     category: "Nutrition",
     price: 2800,
     stock: 15,
@@ -80,31 +121,31 @@ export const PRODUCTS = [
   },
   {
     id: 3,
-    name: "Resistance Bands Set",
-    category: "Equipment",
+    name: "Set de Bandes de Résistance",
+    category: "Équipement",
     price: 1200,
     stock: 8,
     sold: 34,
   },
   {
     id: 4,
-    name: "Gym Gloves",
-    category: "Accessories",
+    name: "Gants de Gym",
+    category: "Accessoires",
     price: 800,
     stock: 31,
     sold: 67,
   },
   {
     id: 5,
-    name: "Shaker Bottle",
-    category: "Accessories",
+    name: "Shaker",
+    category: "Accessoires",
     price: 500,
     stock: 45,
     sold: 210,
   },
   {
     id: 6,
-    name: "Pre-Workout 300g",
+    name: "Pré-Workout 300g",
     category: "Nutrition",
     price: 3200,
     stock: 0,
@@ -112,12 +153,12 @@ export const PRODUCTS = [
   },
 ];
 
-export const SUBSCRIPTIONS = [
+export const SUBSCRIPTIONS: Subscription[] = [
   {
     id: 1,
     member: "Nour Benali",
     plan: "Basic",
-    type: "new",
+    type: "nouveau",
     date: "2026-03-01",
     amount: 2000,
   },
@@ -125,7 +166,7 @@ export const SUBSCRIPTIONS = [
     id: 2,
     member: "Amina Khelifi",
     plan: "Basic",
-    type: "renew",
+    type: "renouvelé",
     date: "2026-03-01",
     amount: 2000,
   },
@@ -133,7 +174,7 @@ export const SUBSCRIPTIONS = [
     id: 3,
     member: "Riad Mansouri",
     plan: "Premium",
-    type: "expired",
+    type: "expiré",
     date: "2025-03-15",
     amount: 3500,
   },
@@ -141,7 +182,7 @@ export const SUBSCRIPTIONS = [
     id: 4,
     member: "Yassine Bouazza",
     plan: "Premium",
-    type: "renew",
+    type: "renouvelé",
     date: "2025-01-10",
     amount: 3500,
   },
@@ -149,7 +190,7 @@ export const SUBSCRIPTIONS = [
     id: 5,
     member: "Sonia Hadjadj",
     plan: "Basic",
-    type: "expired",
+    type: "expiré",
     date: "2025-09-01",
     amount: 2000,
   },
@@ -157,20 +198,21 @@ export const SUBSCRIPTIONS = [
     id: 6,
     member: "Karim Oukaci",
     plan: "Premium",
-    type: "active",
+    type: "actif",
     date: "2025-06-20",
     amount: 3500,
   },
 ];
 
-export const NAV_ADMIN = [
-  { id: "dashboard", label: "Dashboard", icon: "📊" },
-  { id: "members", label: "Members", icon: "👥" },
-  { id: "subscriptions", label: "Subscriptions", icon: "📋" },
-  { id: "products", label: "Products & Sales", icon: "🛍️" },
+export const NAV_ADMIN: NavItem[] = [
+  { id: "tableau_de_bord", label: "Tableau de bord", icon: "📊" },
+  { id: "membres", label: "Membres", icon: "👥" },
+  { id: "abonnements", label: "Abonnements", icon: "📋" },
+  { id: "produits", label: "Produits & Ventes", icon: "🛍️" },
 ];
-export const NAV_SECRETARY = [
-  { id: "members", label: "Members", icon: "👥" },
-  { id: "subscriptions", label: "Subscriptions", icon: "📋" },
-  { id: "products", label: "Buy Products", icon: "🛍️" },
+
+export const NAV_SECRETARY: NavItem[] = [
+  { id: "membres", label: "Membres", icon: "👥" },
+  { id: "abonnements", label: "Abonnements", icon: "📋" },
+  { id: "produits", label: "Acheter des produits", icon: "🛍️" },
 ];

@@ -59,9 +59,9 @@ export default function Sidebar({ role, active, setActive }: SidebarProps) {
         <Avatar initials={role === "admin" ? "AD" : "SC"} size={34} />
         <View style={{ marginLeft: 10 }}>
           <Text style={s.footerName}>
-            {role === "admin" ? "Administrator" : "Secretary"}
+            {role === "admin" ? "Administrateur" : "Secretaire"}
           </Text>
-          <Text style={s.footerSub}>Logged in</Text>
+          <Text style={s.footerSub}>Vous êtes connecté(e)</Text>
         </View>
       </View>
     </SafeAreaView>
