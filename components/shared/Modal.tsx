@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { C } from "../../constants/colors";
@@ -24,19 +25,43 @@ export default function Modal({
   onClose,
   children,
 }: ModalProps) {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   return (
     <RNModal
       visible={visible}
       transparent
       animationType="fade"
       onRequestClose={onClose}
+      statusBarTranslucent
     >
       <Pressable style={s.overlay} onPress={onClose}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={s.kav}
         >
-          <Pressable style={s.sheet} onPress={() => {}}>
+          <Pressable
+            style={[
+              s.sheet,
+              isLandscape
+                ? {
+                    // Landscape: centered floating dialog
+                    width: width * 0.55,
+                    maxHeight: height * 0.9,
+                    borderRadius: C.radiusLg,
+                    alignSelf: "center",
+                  }
+                : {
+                    // Portrait: bottom sheet
+                    width: "100%",
+                    maxHeight: height * 0.85,
+                    borderTopLeftRadius: C.radiusLg,
+                    borderTopRightRadius: C.radiusLg,
+                  },
+            ]}
+            onPress={() => {}}
+          >
             {/* Header */}
             <View style={s.header}>
               <Text style={s.title}>{title}</Text>
@@ -44,9 +69,11 @@ export default function Modal({
                 <Text style={s.close}>✕</Text>
               </Pressable>
             </View>
-            {/* Body */}
+
+            {/* Body — scrollable so buttons always reachable */}
             <ScrollView
-              style={s.body}
+              style={{ flexShrink: 1 }}
+              contentContainerStyle={s.body}
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="handled"
             >
@@ -63,14 +90,16 @@ const s = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: "rgba(15,23,36,0.45)",
-    justifyContent: "flex-end",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  kav: { justifyContent: "flex-end" },
+  kav: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   sheet: {
     backgroundColor: C.surface,
-    borderTopLeftRadius: C.radiusLg,
-    borderTopRightRadius: C.radiusLg,
-    maxHeight: "85%",
     elevation: 24,
   },
   header: {
@@ -83,5 +112,5 @@ const s = StyleSheet.create({
   },
   title: { fontSize: 16, fontWeight: "700", color: C.text },
   close: { fontSize: 18, color: C.textMuted },
-  body: { padding: 20 },
+  body: { padding: 20, paddingBottom: 32 },
 });
